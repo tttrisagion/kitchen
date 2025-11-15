@@ -1,0 +1,8 @@
+Flask
+Flask-SQLAlchemy
+psycopg2-binary
+Alembic
+beautifulsoup4
+pint
+flask-restx
+flask-cors

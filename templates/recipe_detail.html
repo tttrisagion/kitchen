@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}{{ recipe.title }} - Trading.Kitchen{% endblock %}
+
+{% block content %}
+    <h1 class="text-4xl md:text-6xl font-bold mb-6">{{ recipe.title }}</h1>
+
+    {% if recipe.image_url %}
+        <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}" class="w-full h-64 object-cover rounded-lg shadow-md mb-8">
+    {% else %}
+        <div class="w-full h-64 bg-gray-200 flex items-center justify-center rounded-lg shadow-md mb-8 text-gray-500 text-2xl">No Image Available</div>
+    {% endif %}
+
+    {% if recipe.story %}
+    <section class="my-8">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 border-b-2 border-gray-300 pb-2">The Story</h2>
+        <div class="text-lg md:text-xl leading-relaxed space-y-6">
+            {% for paragraph in recipe.story.split('\n\n') %}
+                <p>{{ paragraph }}</p>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="my-8">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 border-b-2 border-gray-300 pb-2">Ingredients</h2>
+        <ul class="list-disc list-inside text-lg md:text-xl space-y-2">
+            {% for ri in recipe.ingredients %}
+                <li>{{ ri|format_ingredient }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+    
+    {% if cost_data %}
+    <section class="my-8 bg-gray-100 p-6 rounded-lg border border-gray-300">
+        <h3 class="text-2xl font-bold mb-4">Recipe Cost Estimate</h3>
+        <div class="text-lg space-y-2">
+            <p><strong>Total Cost:</strong> ${{ "%.2f"|format(cost_data.total_cost) }} {{ cost_data.currency }}</p>
+            <p><strong>Cost per Serving:</strong> ${{ "%.2f"|format(cost_data.cost_per_serving) }} ({{ cost_data.servings }} servings)</p>
+            {% if cost_data.missing_prices %}
+                <p class="text-sm text-gray-600 mt-4">* Price data unavailable for: {{ cost_data.missing_prices|length }} ingredient(s)</p>
+            {% endif %}
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="my-8">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 border-b-2 border-gray-300 pb-2">Instructions</h2>
+        <ol class="list-decimal list-inside text-lg md:text-xl space-y-2">
+            {% for step in recipe.instructions.split('\n') %}
+                {% if step.strip() %}
+                    <li>{{ step.strip() }}</li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+    </section>
+
+    {% if recipe.economic_lesson %}
+    <section class="my-8 pt-8 border-t-4 border-black">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">The Economic Lesson</h2>
+        <div class="text-lg md:text-xl leading-relaxed space-y-6">
+            {% for paragraph in recipe.economic_lesson.split('\n\n') %}
+                <p>{{ paragraph }}</p>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Trading.Kitchen{% endblock %}</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Era-appropriate fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,4S00&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'EB Garamond', serif;
+            background-color: #f5f2eb; /* Aged paper */
+            color: #1a1a1a;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="antialiased leading-relaxed">
+
+    <!-- Container -->
+    <div class="container mx-auto max-w-5xl p-6 md:p-12">
+
+        <!-- Backlink / Navigation (can be expanded later) -->
+        <nav class="mb-8">
+            <a href="{{ url_for('index') }}" class="text-lg text-gray-800 hover:underline">&larr; Back to The Pantry</a>
+        </nav>
+
+        <article class="bg-white p-8 md:p-12 rounded-lg shadow-xl border-2 border-black mt-8">
+            {% block content %}{% endblock %}
+        </article>
+        
+        <!-- Footer -->
+        <footer class="text-center mt-12 text-gray-700">
+            <p>&copy; 2025 Trading.Kitchen. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NMY1V4BQVB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NMY1V4BQVB');
+</script>
+
+</body>
+</html>

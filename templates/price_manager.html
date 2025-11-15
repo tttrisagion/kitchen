@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block title %}Price Manager - Trading.Kitchen{% endblock %}
+
+{% block content %}
+    <h1 class="text-4xl md:text-6xl font-bold mb-6">Ingredient Price Manager</h1>
+
+    <!-- Country selector -->
+    <div class="mb-8">
+        <label for="countrySelect" class="block text-lg font-bold mb-2">Select Country:</label>
+        <select id="countrySelect" class="w-full md:w-auto px-4 py-2 border-2 border-black rounded-lg text-lg">
+            <option value="">Loading countries...</option>
+        </select>
+    </div>
+
+    <!-- Price display -->
+    <div id="priceDisplay" class="hidden">
+        <h2 class="text-2xl font-bold mb-4">
+            Prices for <span id="countryName"></span> 
+            (<span id="currencyCode"></span>)
+        </h2>
+        
+        <div class="mb-4">
+            <p class="text-lg">Total prices: <span id="totalPrices" class="font-bold"></span></p>
+        </div>
+
+        <!-- Price table -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full border-2 border-black">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="border border-black px-4 py-2 text-left">Ingredient</th>
+                        <th class="border border-black px-4 py-2 text-left">Price</th>
+                        <th class="border border-black px-4 py-2 text-left">Unit</th>
+                        <th class="border border-black px-4 py-2 text-left">Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody id="priceTableBody">
+                    <!-- Populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Empty state -->
+    <div id="emptyState" class="hidden text-center py-12">
+        <p class="text-xl text-gray-600">No prices available for this country.</p>
+        <p class="mt-4">
+            <a href="/api/docs" class="text-blue-600 hover:underline">View API documentation</a>
+        </p>
+    </div>
+
+    <!-- API Documentation link -->
+    <div class="mt-12 pt-8 border-t-2 border-gray-300">
+        <h3 class="text-2xl font-bold mb-4">API Access</h3>
+        <p class="mb-4">Access price data programmatically via our REST API:</p>
+        <div class="bg-gray-100 p-4 rounded-lg font-mono text-sm">
+            <p>GET /api/prices/{country_code}</p>
+            <p class="mt-2">Example: <a href="/api/prices/USA" class="text-blue-600 hover:underline">/api/prices/USA</a></p>
+        </div>
+        <p class="mt-4">
+            <a href="/api/docs" class="inline-block bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800">
+                View Full API Documentation
+            </a>
+        </p>
+    </div>
+
+    <script>
+        // Format ingredient names for display
+        function formatIngredientName(name) {
+            // Convert UPPERCASE_NAME to Title Case
+            if (name === name.toUpperCase() && name.includes('_')) {
+                return name.split('_')
+                    .map(word => word.charAt(0) + word.slice(1).toLowerCase())
+                    .join(' ');
+            }
+            return name;
+        }
+
+        // Format date
+        function formatDate(isoDate) {
+            return new Date(isoDate).toLocaleDateString();
+        }
+
+        // Load countries
+        async function loadCountries() {
+            try {
+                const response = await fetch('/api/prices/');
+                const data = await response.json();
+                
+                const select = document.getElementById('countrySelect');
+                select.innerHTML = '<option value="">Select a country...</option>';
+                
+                data.countries.forEach(country => {
+                    const option = document.createElement('option');
+                    option.value = country.country_code;
+                    option.textContent = `${country.country_code} - ${country.total_prices} prices`;
+                    select.appendChild(option);
+                });
+                
+                // Auto-select USA if available
+                if (data.countries.some(c => c.country_code === 'USA')) {
+                    select.value = 'USA';
+                    loadPrices('USA');
+                }
+            } catch (error) {
+                console.error('Error loading countries:', error);
+            }
+        }
+
+        // Load prices for a country
+        async function loadPrices(countryCode) {
+            if (!countryCode) {
+                document.getElementById('priceDisplay').classList.add('hidden');
+                document.getElementById('emptyState').classList.add('hidden');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/prices/${countryCode}`);
+                const data = await response.json();
+                
+                document.getElementById('countryName').textContent = countryCode;
+                document.getElementById('currencyCode').textContent = data.currency;
+                document.getElementById('totalPrices').textContent = data.total_prices;
+                
+                if (data.prices.length > 0) {
+                    // Show price table
+                    document.getElementById('priceDisplay').classList.remove('hidden');
+                    document.getElementById('emptyState').classList.add('hidden');
+                    
+                    // Populate table
+                    const tbody = document.getElementById('priceTableBody');
+                    tbody.innerHTML = '';
+                    
+                    data.prices.forEach(price => {
+                        const row = tbody.insertRow();
+                        row.innerHTML = `
+                            <td class="border border-black px-4 py-2">${formatIngredientName(price.ingredient_name)}</td>
+                            <td class="border border-black px-4 py-2">${price.price.toFixed(2)} ${price.currency}</td>
+                            <td class="border border-black px-4 py-2">${price.quantity} ${price.unit}</td>
+                            <td class="border border-black px-4 py-2">${formatDate(price.last_updated)}</td>
+                        `;
+                    });
+                } else {
+                    // Show empty state
+                    document.getElementById('priceDisplay').classList.add('hidden');
+                    document.getElementById('emptyState').classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Error loading prices:', error);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCountries();
+            
+            document.getElementById('countrySelect').addEventListener('change', (e) => {
+                loadPrices(e.target.value);
+            });
+        });
+    </script>
+{% endblock %}
