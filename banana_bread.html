@@ -24,6 +24,7 @@
             #recipe-section {
                 column-count: 2;
                 column-gap: 2rem;
+                column-rule: 1px solid #666;
             }
             /* Ensure headings don't break across columns */
             h1, h2, h3 {
@@ -53,21 +54,6 @@
             
             <h1 class="text-4xl md:text-6xl font-bold mb-6">Banana Bread</h1>
 
-            <div class="flex justify-around text-center my-8 -mb-4">
-                <div>
-                    <h4 class="text-xl font-bold">Prep Time</h4>
-                    <p class="text-lg">15 mins</p>
-                </div>
-                <div>
-                    <h4 class="text-xl font-bold">Cook Time</h4>
-                    <p class="text-lg">45 mins</p>
-                </div>
-                <div>
-                    <h4 class="text-xl font-bold">Serves</h4>
-                    <p class="text-lg">8</p>
-                </div>
-            </div>
-
             <img src="banana_bread.jpeg" alt="A delicious loaf of banana bread" class="w-full rounded-lg shadow-lg my-8 border-2 border-black print:hidden">
 
             <!-- Section 1: The Story -->
@@ -83,6 +69,13 @@
             <!-- Section 2: The Recipe -->
             <section id="recipe-section" class="my-8">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 border-b-2 border-gray-300 pb-2">The Recipe</h2>
+
+                <div class="flex justify-between my-6 text-lg">
+                    <p><span class="font-bold">Prep Time:</span> 15 mins</p>
+                    <p><span class="font-bold">Cook Time:</span> 45 mins</p>
+                    <p><span class="font-bold">Serves:</span> 8</p>
+                </div>
+                
                 <img src="banana_bread.jpeg" alt="A delicious loaf of banana bread" class="hidden print:block w-full rounded-lg shadow-lg my-4 border-2 border-black">
 
                 <p class="text-lg">The following recipe has been inspired by a lot of trial an error resulting in a robust predictable result.</p>
