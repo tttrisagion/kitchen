@@ -34,7 +34,7 @@
         }
     </style>
 </head>
-<body class="antialiased leading-relaxed">
+<body class="antialiased leading-relaxed print:leading-normal">
 
     <!-- Container -->
     <div class="container mx-auto max-w-3xl p-6 md:p-12">
@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 
-                <img src="banana_bread.jpeg" alt="A delicious loaf of banana bread" class="hidden print:block w-full rounded-lg shadow-lg my-4 border-2 border-black">
+                <img src="banana_bread.jpeg" alt="A delicious loaf of banana bread" class="hidden print:block w-full rounded-lg shadow-lg print:shadow-none my-4 border-2 border-black">
 
                 <p class="text-lg">The following recipe has been inspired by a lot of trial an error resulting in a robust predictable result.</p>
                 
@@ -126,6 +126,10 @@
                     <a href="index.html#mission" class="inline-block mt-4 text-lg font-bold hover:underline">Learn more at The Trading Post &rarr;</a>
                 </div>
             </section>
+
+            <footer class="text-center text-xs mt-8 pt-4 border-t border-gray-400 hidden print:block">
+                Find more recipes at https://trading.kitchen
+            </footer>
 
         </article>
         
