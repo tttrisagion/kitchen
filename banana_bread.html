@@ -27,17 +27,25 @@
     <!-- Container -->
     <div class="container mx-auto max-w-3xl p-6 md:p-12">
 
-        <!-- Backlink -->
-        <a href="index.html" class="text-lg text-gray-800 hover:underline">&larr; Back to The Pantry</a>
+        <!-- Backlink and Print Button -->
+        <div class="flex justify-between items-center print:hidden">
+            <a href="index.html" class="text-lg text-gray-800 hover:underline">&larr; Back to The Pantry</a>
+            <button onclick="window.print()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm2 0h6v3H7V4zM4 9h12v6H4V9zm6-2a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z" clip-rule="evenodd" />
+                </svg>
+                <span>Print</span>
+            </button>
+        </div>
 
-        <article class="bg-white p-8 md:p-12 rounded-lg shadow-xl border-2 border-black mt-8">
+        <article class="bg-white p-8 md:p-12 rounded-lg shadow-xl border-2 border-black mt-8 print:shadow-none print:border-none print:mt-0 print:p-0">
             
             <h1 class="text-4xl md:text-6xl font-bold mb-6">Banana Bread</h1>
 
-            <img src="banana_bread.jpeg" alt="A delicious loaf of banana bread" class="w-full rounded-lg shadow-lg my-8 border-2 border-black">
+            <img src="banana_bread.jpeg" alt="A delicious loaf of banana bread" class="w-full rounded-lg shadow-lg my-8 border-2 border-black print:hidden">
 
             <!-- Section 1: The Story -->
-            <section class="my-8">
+            <section class="my-8 print:hidden">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 border-b-2 border-gray-300 pb-2">The Story</h2>
                 <div class="text-lg md:text-xl leading-relaxed space-y-6">
                     <p>Banana bread is a true icon of American ingenuity. During the Depression, this once-exotic tropical fruit became surprisingly accessible due to massive import operations by companies like the **United Fruit Company**. For the first time, bananas were a common household item.</p>
@@ -53,14 +61,15 @@
                 
                 <h3 class="text-2xl font-bold mt-6 mb-2">Ingredients</h3>
                 <ul class="list-disc list-inside text-lg md:text-xl space-y-2">
-                    <li>3-4 mashed overripe bananas</li>
+                    <li>3 - 4 mashed overripe bananas</li>
+                    <li>½ - ⅔ cup brown sugar</li>
+                    <li>½ cup butter, softened</li>
+                    <li>3 large eggs, beaten</li>
+                    <li>½ teaspoon vanilla (optional)</li>
                     <li>2 cups all-purpose flour</li>
                     <li>1 teaspoon baking soda</li>
                     <li>¼ teaspoon salt</li>
                     <li>½ teaspoon cinnamon</li>
-                    <li>½ cup brown sugar</li>
-                    <li>½ cup butter, softened</li>
-                    <li>3 large eggs, beaten</li>
                 </ul>
 
                 <h3 class="text-2xl font-bold mt-6 mb-2">Instructions</h3>
@@ -78,7 +87,7 @@
             </section>
 
             <!-- Section 3: The Economic Lesson (THE FUNNEL) -->
-            <section class="my-8 pt-8 border-t-4 border-black">
+            <section class="my-8 pt-8 border-t-4 border-black print:hidden">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4">The Economic Lesson</h2>
                 <div class="text-lg md:text-xl leading-relaxed space-y-6">
                     <p><strong class="font-bold">Principle:</strong> True wealth is the ability to see value and create dignity where others see only waste.</p>
@@ -91,7 +100,7 @@
         </article>
         
         <!-- Footer -->
-        <footer class="text-center mt-12 text-gray-700">
+        <footer class="text-center mt-12 text-gray-700 print:hidden">
             <p>&copy; 2025 Trading.Kitchen. All rights reserved.</p>
             <p class="mt-4">
                 <a href="https://github.com/tttrisagion/kitchen" class="text-gray-600 hover:text-black hover:underline" target="_blank" rel="noopener noreferrer">
