@@ -20,6 +20,17 @@
             font-family: 'Merriweather', serif;
             font-weight: 700;
         }
+        @media print {
+            #recipe-section {
+                column-count: 2;
+                column-gap: 2rem;
+            }
+            /* Ensure headings don't break across columns */
+            h1, h2, h3 {
+                break-after: avoid-page;
+                break-inside: avoid;
+            }
+        }
     </style>
 </head>
 <body class="antialiased leading-relaxed">
@@ -55,7 +66,7 @@
             </section>
 
             <!-- Section 2: The Recipe -->
-            <section class="my-8">
+            <section id="recipe-section" class="my-8">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 border-b-2 border-gray-300 pb-2">The Recipe</h2>
                 <p class="text-lg">The following recipe has been inspired by a lot of trial an error resulting in a robust predictable result.</p>
                 
